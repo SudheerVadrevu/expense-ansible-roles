@@ -1,7 +1,7 @@
 - name: Install my sql server
-    ansible.builtin.dnf:
-     name: mysql-server
-     state: latest
+  ansible.builtin.dnf:
+    name: mysql-server
+    state: latest
   
   - name: start and enable mysql server
     ansible.builtin.service:
