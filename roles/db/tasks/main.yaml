@@ -1,0 +1,34 @@
+- name: Install my sql server
+    ansible.builtin.dnf:
+     name: mysql-server
+     state: latest
+  
+  - name: start and enable mysql server
+    ansible.builtin.service:
+     name: mysqld
+     state: started
+     enabled: yes
+
+  - name: Install the python dependecies
+    ansible.builtin.pip:
+     name:
+     - PyMySQL
+     - cryptography
+     executable: pip3.9
+    
+  - name: Setup username and Password
+    community.mysql.mysql_info:
+     login_user: root
+     login_password: "{{ secretpassword }}"
+     login_host: "{{sudheer}}"
+     filter: version
+    ignore_errors: yes
+    register: vinni
+  
+  - name: save the output
+    ansible.builtin.debug:
+     msg: "the error output: {{vinni}} "
+
+  - name: setup root password
+    ansible.builtin.command: "mysql_secure_installation --set-root-pass {{secretpassword}}"
+    when: vinni.failed is true
