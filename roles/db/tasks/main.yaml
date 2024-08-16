@@ -19,8 +19,8 @@
 - name: Setup username and Password
   community.mysql.mysql_info:
     login_user: root
-    login_password: "{{ secretpassword }}"
-    login_host: "{{db}}"
+    login_password: secretpassword 
+    login_host: db
     filter: version
   ignore_errors: yes
   register: vinni
